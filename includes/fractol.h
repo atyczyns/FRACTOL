@@ -6,7 +6,7 @@
 /*   By: becaraya <becaraya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 09:12:24 by becaraya          #+#    #+#             */
-/*   Updated: 2019/05/15 15:24:39 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/05/16 16:19:55 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <math.h>
+# include <stdlib.h>
 # include <mlx.h>
-# include <stdio.h>
 # define HEIGHT 500
 # define WIDTH 650
 # define KEY_ESCAPE 53
@@ -45,7 +45,17 @@ typedef	struct		s_mlx
 	int				iteration_max;
 	float			color;
 	int				pass;
+	float			zoom_x;
+	float			zoom_y;
+	int				**tab;
 }					t_mlx;
+
+typedef struct		s_coord
+{
+	int				x;
+	int				y;
+	struct s_coord	*next;
+}					t_coord;
 
 typedef struct		s_img
 {
@@ -67,8 +77,15 @@ void				ft_put_pixel(t_mlx *mlx, int x, int y, int color);
 void				do_again(t_mlx **mlx);
 void				set_point(t_mlx **mlx);
 void				set_point_2(t_mlx **mlx);
+void				set_point_3(t_mlx **mlx);
 void				zoom(t_mlx *mlx);
 void				de_zoom(t_mlx *mlx);
 int					color(t_mlx *mlx, int i);
+int					init(t_mlx **mlx, int x, int y);
+int					init_2(t_mlx **mlx, int x, int y);
+int					init_3(t_mlx **mlx, int x, int y);
+int					ft_init_coord(t_coord **coord);
+void				ft_free_coord(t_coord **coord);
+int					ft_add_coord(t_coord *tmp_pixel, int x, int y);
 
 #endif

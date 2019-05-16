@@ -24,7 +24,10 @@ SRC_LIST = lst_mlx.c \
 		   fractol.c \
 		   keys_bind.c \
 		   set_point.c \
-		   color.c
+		   color.c \
+		   init.c \
+		   tools.c \
+		   coord.c
 
 SRC_DIR = ./srcs/
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
