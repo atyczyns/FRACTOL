@@ -6,13 +6,13 @@
 /*   By: becaraya <becaraya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 15:55:22 by becaraya          #+#    #+#             */
-/*   Updated: 2019/04/09 11:57:45 by becaraya         ###   ########.fr       */
+/*   Updated: 2019/05/14 14:31:04 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../includes/fractol.h"
 
-int			ft_init_t_mlx_2(t_mlx **mlx)
+int			ft_init_mlx_2(t_mlx **mlx)
 {
 	if (!((*mlx)->img->ptr = mlx_new_image((*mlx)->init, WIDTH, HEIGHT)))
 	{
@@ -36,7 +36,7 @@ int			ft_init_t_mlx_2(t_mlx **mlx)
 	return (EXIT_SUCCESS);
 }
 
-int			ft_init_t_mlx(t_mlx **mlx)
+int			ft_init_mlx(t_mlx **mlx)
 {
 	if (!((*mlx) = (t_mlx *)malloc(sizeof(t_mlx))))
 		return (EXIT_FAILURE);
@@ -45,7 +45,7 @@ int			ft_init_t_mlx(t_mlx **mlx)
 		free(mlx);
 		return (EXIT_FAILURE);
 	}
-	if (!((*mlx)->win = mlx_new_window((*mlx)->init, WIDTH, HEIGHT, "FdF"))
+	if (!((*mlx)->win = mlx_new_window((*mlx)->init, WIDTH, HEIGHT, "Fractol"))
 		|| !((*mlx)->img = (t_img *)malloc(sizeof(t_img))))
 	{
 		if ((*mlx)->win)
@@ -54,13 +54,12 @@ int			ft_init_t_mlx(t_mlx **mlx)
 		free(mlx);
 		return (EXIT_FAILURE);
 	}
-	if (ft_init_t_mlx_2(mlx) == EXIT_FAILURE)
+	if (ft_init_mlx_2(mlx) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	(*mlx)->clr = 1;
 	return (EXIT_SUCCESS);
 }
 
-void		ft_free_t_mlx(t_mlx **mlx)
+void		ft_free_mlx(t_mlx **mlx)
 {
 	if ((*mlx))
 	{

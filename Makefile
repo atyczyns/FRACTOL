@@ -15,20 +15,16 @@ MLX = $(MLX_DIR)libmlx.a
 MLX_DIR = /usr/local/lib/
 MLX_HEAD = $(MLX_DIR)/../include/mlx.h
 
-HEADERS_LIST = fdf.h
+HEADERS_LIST = fractol.h
 HEADERS_DIR = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
 
 SRC_LIST = lst_mlx.c \
 		   main.c \
 		   fractol.c \
-		   ft_lst_map.c \
-		   ft_init_map.c \
-		   map.c \
 		   keys_bind.c \
-		   coloring.c \
-		   tools.c \
-		   tools_2.c
+		   set_point.c \
+		   color.c
 
 SRC_DIR = ./srcs/
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))

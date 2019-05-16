@@ -3,69 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   keys_bind.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becaraya <becaraya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atyczyns <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 16:32:42 by becaraya          #+#    #+#             */
-/*   Updated: 2019/04/16 13:21:41 by atyczyns         ###   ########.fr       */
+/*   Created: 2019/05/14 11:26:10 by atyczyns          #+#    #+#             */
+/*   Updated: 2019/05/15 14:24:11 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../includes/fractol.h"
 
-static void	ft_free_coo_s(t_coo *map)
+static int	nice_close(t_mlx **mlx)
 {
-	if ((map->next))
-		ft_free_coo_s(map->next);
-	if (map)
-		free(map);
-}
-
-static int	nice_close(t_all *all)
-{
-	mlx_destroy_image(all->mlx->init, all->mlx->img->ptr);
-	free(all->mlx->img);
-	mlx_destroy_window(all->mlx->init, all->mlx->win);
-	free(all->mlx);
-	ft_free_coo_s(all->map->coo);
-	free(all->map);
-	free(all);
+	mlx_destroy_image((*mlx)->init, (*mlx)->img->ptr);
+	free((*mlx)->img);
+	mlx_destroy_window((*mlx)->init, (*mlx)->win);
+	printf("essaie de free\n");
+	free(*mlx);
+	printf("a tout free !\n");
 	exit(0);
 	return (0);
 }
 
-int			ft_init_t_mlx_2___(t_mlx **mlx)
+static int	command(int key, t_mlx **mlx)
 {
-	if (!((*mlx)->img->ptr = mlx_new_image((*mlx)->init, WIDTH, HEIGHT)))
-	{
-		mlx_destroy_window((*mlx)->init, (*mlx)->win);
-		free((*mlx)->img);
-		free((*mlx)->init);
-		free(mlx);
-		return (EXIT_FAILURE);
-	}
-	if (((*mlx)->img->data = mlx_get_data_addr((*mlx)->img->ptr,
-			&((*mlx)->img->bpp), &((*mlx)->img->size_l),
-				&((*mlx)->img->endian))) == NULL)
-	{
-		free((*mlx)->img->ptr);
-		mlx_destroy_window((*mlx)->init, (*mlx)->win);
-		free((*mlx)->img);
-		free((*mlx)->init);
-		free(mlx);
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
-static int	command(int key, t_all *glob)
-{
-	(void)key;
-	ft_print_map(&glob->map, &(*glob).mlx);
+	if (key == KEY_ESCAPE)
+		nice_close(mlx);
+	if (key == KEY_PAGE_UP)
+		zoom(*mlx);
+	if (key == KEY_PAGE_DOWN)
+		de_zoom(*mlx);
+	do_again(mlx);
 	return (0);
 }
 
-void		ctr(t_all *glob)
+void		ctrl(t_mlx **mlx)
 {
-	mlx_hook(glob->mlx->win, 2, 0, command, glob);
-	mlx_hook(glob->mlx->win, 17, 0, nice_close, glob);
+	mlx_hook((*mlx)->win, 2, 0, command, mlx);
+	mlx_hook((*mlx)->win, 17, 0, nice_close, mlx);
+}
+
+void	ft_put_pixel(t_mlx *mlx, int x, int y, int color)
+{
+	int		i;
+
+	if (x < WIDTH && x >= 0 && y < HEIGHT && y >= 0)
+	{
+		i = (x * mlx->img->bpp / 8) + (y * mlx->img->size_l);
+		mlx->img->data[i] = color;
+		mlx->img->data[++i] = color >> 8;
+		mlx->img->data[++i] = color >> 16;
+	}
 }
