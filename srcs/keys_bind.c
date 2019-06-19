@@ -6,7 +6,7 @@
 /*   By: atyczyns <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 11:26:10 by atyczyns          #+#    #+#             */
-/*   Updated: 2019/05/15 14:24:11 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:46:30 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,44 @@ static int	command(int key, t_mlx **mlx)
 		nice_close(mlx);
 	if (key == KEY_PAGE_UP)
 		zoom(*mlx);
-	if (key == KEY_PAGE_DOWN)
+	if (key == KEY_PAGE_DOWN && (*mlx)->iteration_max != 10)
 		de_zoom(*mlx);
+	if (key == KEY_CHANGE_COLOR)
+		change_color((*mlx));
+	if (key == KEY_MOVE_JULIA)
+		(*mlx)->mouse = !(*mlx)->mouse;
+	do_again(mlx);
+	return (0);
+}
+
+static int	mouse_hook(int mousecode, int x, int y, t_mlx **mlx)
+{
+	(void)x;
+	(void)y;
+	if (mousecode == 4)
+		zoom(*mlx);
+	if (mousecode == 5 && (*mlx)->iteration_max != 10)
+		de_zoom(*mlx);
+	do_again(mlx);
+	return (0);
+}
+
+static int	mouse_julia(int x, int y, t_mlx **mlx)
+{
+	if ((*mlx)->mouse == 1)
+	{
+		(*mlx)->c_r = x * 2;
+		(*mlx)->c_i = y * 2 - 800;
+	}
+	(*mlx)->pass = 1;
 	do_again(mlx);
 	return (0);
 }
 
 void		ctrl(t_mlx **mlx)
 {
+	mlx_hook((*mlx)->win, 6, 1 < 6, mouse_julia, mlx);
+	mlx_mouse_hook((*mlx)->win, mouse_hook, mlx);
 	mlx_hook((*mlx)->win, 2, 0, command, mlx);
 	mlx_hook((*mlx)->win, 17, 0, nice_close, mlx);
-}
-
-void	ft_put_pixel(t_mlx *mlx, int x, int y, int color)
-{
-	int		i;
-
-	if (x < WIDTH && x >= 0 && y < HEIGHT && y >= 0)
-	{
-		i = (x * mlx->img->bpp / 8) + (y * mlx->img->size_l);
-		mlx->img->data[i] = color;
-		mlx->img->data[++i] = color >> 8;
-		mlx->img->data[++i] = color >> 16;
-	}
 }

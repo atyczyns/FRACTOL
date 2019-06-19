@@ -6,7 +6,7 @@
 /*   By: atyczyns <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 13:53:00 by atyczyns          #+#    #+#             */
-/*   Updated: 2019/05/16 14:38:37 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:23:52 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 int		init_3(t_mlx **mlx, int x, int y)
 {
-	(*mlx)->zoom_x = (*mlx)->image_x / ((*mlx)->x2 - (*mlx)->x1);
-	(*mlx)->zoom_y = (*mlx)->image_y / ((*mlx)->y2 - (*mlx)->y1);
-	(*mlx)->c_r = x / (*mlx)->zoom_x + (*mlx)->x1;
-	(*mlx)->c_i = y / (*mlx)->zoom_y + (*mlx)->y1;
+	float	zoom_x;
+	float	zoom_y;
+
+	zoom_x = (*mlx)->image_x / ((*mlx)->x2 - (*mlx)->x1);
+	zoom_y = (*mlx)->image_y / ((*mlx)->y2 - (*mlx)->y1);
+	(*mlx)->c_r = x / zoom_x + (*mlx)->x1;
+	(*mlx)->c_i = y / zoom_y + (*mlx)->y1;
 	(*mlx)->z_r = 0;
 	(*mlx)->z_i = 0;
 	return (0);
@@ -28,6 +31,9 @@ int		init_2(t_mlx **mlx, int x, int y)
 	float	zoom_x;
 	float	zoom_y;
 
+	(*mlx)->x1 = (*mlx)->x1 + (*mlx)->incr;
+	(*mlx)->y1 = (*mlx)->y1 + (*mlx)->incr;
+	(*mlx)->pass = 0;
 	zoom_x = (*mlx)->image_x / ((*mlx)->x2 - (*mlx)->x1);
 	zoom_y = (*mlx)->image_y / ((*mlx)->y2 - (*mlx)->y1);
 	(*mlx)->c_r = 0.280;

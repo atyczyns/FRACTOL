@@ -6,7 +6,7 @@
 /*   By: becaraya <becaraya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 09:12:24 by becaraya          #+#    #+#             */
-/*   Updated: 2019/05/16 16:19:55 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:37:18 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@
 # define KEY_ESCAPE 53
 # define KEY_PAGE_DOWN 121
 # define KEY_PAGE_UP 116
+# define KEY_CHANGE_COLOR 49
+# define KEY_MOVE_JULIA 35
 
 typedef	struct		s_mlx
 {
+	int				mouse;
 	void			*init;
 	void			*win;
 	struct s_img	*img;
@@ -43,11 +46,13 @@ typedef	struct		s_mlx
 	float			image_y;
 	float			tmp;
 	int				iteration_max;
-	float			color;
+	float		color;
+	int			clring;
 	int				pass;
 	float			zoom_x;
 	float			zoom_y;
 	int				**tab;
+	int				incr;
 }					t_mlx;
 
 typedef struct		s_coord
@@ -87,5 +92,8 @@ int					init_3(t_mlx **mlx, int x, int y);
 int					ft_init_coord(t_coord **coord);
 void				ft_free_coord(t_coord **coord);
 int					ft_add_coord(t_coord *tmp_pixel, int x, int y);
+int					ft_abs(int value);
+int					do_type(t_mlx *mlx, char *src);
+void				change_color(t_mlx *mlx);
 
 #endif

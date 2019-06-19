@@ -6,7 +6,7 @@
 /*   By: becaraya <becaraya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 15:55:22 by becaraya          #+#    #+#             */
-/*   Updated: 2019/05/14 14:31:04 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:37:57 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int			ft_init_mlx(t_mlx **mlx)
 		free(mlx);
 		return (EXIT_FAILURE);
 	}
+	(*mlx)->clring = 1;
+	(*mlx)->mouse = 1;
 	if (ft_init_mlx_2(mlx) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
