@@ -6,7 +6,7 @@
 /*   By: atyczyns <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 11:26:10 by atyczyns          #+#    #+#             */
-/*   Updated: 2019/06/19 13:46:30 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/20 13:09:21 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,39 @@ static int	command(int key, t_mlx **mlx)
 {
 	if (key == KEY_ESCAPE)
 		nice_close(mlx);
-	if (key == KEY_PAGE_UP)
-		zoom(*mlx);
-	if (key == KEY_PAGE_DOWN && (*mlx)->iteration_max != 10)
-		de_zoom(*mlx);
 	if (key == KEY_CHANGE_COLOR)
 		change_color((*mlx));
 	if (key == KEY_MOVE_JULIA)
+	{
 		(*mlx)->mouse = !(*mlx)->mouse;
+		(*mlx)->pass = 1;
+	}
 	do_again(mlx);
 	return (0);
 }
 
 static int	mouse_hook(int mousecode, int x, int y, t_mlx **mlx)
 {
-	(void)x;
-	(void)y;
-	if (mousecode == 4)
-		zoom(*mlx);
-	if (mousecode == 5 && (*mlx)->iteration_max != 10)
-		de_zoom(*mlx);
+	if (mousecode == 4 || mousecode == 1)
+		zoom(x, y, *mlx);
+	if ((mousecode == 5 || mousecode == 2) && (*mlx)->iteration_max > 0)
+		de_zoom(x, y, *mlx);
 	do_again(mlx);
 	return (0);
 }
 
 static int	mouse_julia(int x, int y, t_mlx **mlx)
 {
+	(void)x;
+	(void)y;
+	if ((*mlx)->type != 1)
+		return (0);
 	if ((*mlx)->mouse == 1)
 	{
-		(*mlx)->c_r = x * 2;
-		(*mlx)->c_i = y * 2 - 800;
+		if ((*mlx)->iteration_max < 250)
+			(*mlx)->iteration_max = (*mlx)->iteration_max + 10;
+		else
+			(*mlx)->iteration_max = 75;
 	}
 	(*mlx)->pass = 1;
 	do_again(mlx);

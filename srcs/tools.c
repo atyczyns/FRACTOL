@@ -6,35 +6,27 @@
 /*   By: atyczyns <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 14:08:00 by atyczyns          #+#    #+#             */
-/*   Updated: 2019/06/19 13:18:14 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/20 13:08:48 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-void		zoom(t_mlx *mlx)
+void		zoom(int x, int y, t_mlx *mlx)
 {
-	float	h;
-
-	h = 0.25;
-	mlx->iteration_max = mlx->iteration_max + 10;
-	mlx->x1 = mlx->x1 - h;
-	mlx->x2 = mlx->x2 + h;
-	mlx->y1 = mlx->y1 - h;
-	mlx->y2 = mlx->y2 + h;
+	mlx->x1 = (x / mlx->zoom + mlx->x1) - (x / (mlx->zoom * 1.3));
+	mlx->y1 = (y / mlx->zoom + mlx->y1) - (y / (mlx->zoom * 1.3));
+	mlx->zoom *= 1.3;
+	mlx->iteration_max++;
 	mlx->pass = 1;
 }
 
-void		de_zoom(t_mlx *mlx)
+void		de_zoom(int x, int y, t_mlx *mlx)
 {
-	float	h;
-
-	h = -0.25;
-	mlx->iteration_max = mlx->iteration_max - 10;
-	mlx->x1 = mlx->x1 - h;
-	mlx->x2 = mlx->x2 + h;
-	mlx->y1 = mlx->y1 - h;
-	mlx->y2 = mlx->y2 + h;
+	mlx->x1 = (x / mlx->zoom + mlx->x1) - (x / (mlx->zoom / 1.3));
+	mlx->y1 = (y / mlx->zoom + mlx->y1) - (y / (mlx->zoom / 1.3));
+	mlx->zoom /= 1.3;
+	mlx->iteration_max--;
 	mlx->pass = 1;
 }
 

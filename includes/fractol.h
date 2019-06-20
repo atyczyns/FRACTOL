@@ -6,7 +6,7 @@
 /*   By: becaraya <becaraya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 09:12:24 by becaraya          #+#    #+#             */
-/*   Updated: 2019/06/19 13:37:18 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/20 12:41:17 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,20 @@
 # define KEY_PAGE_DOWN 121
 # define KEY_PAGE_UP 116
 # define KEY_CHANGE_COLOR 49
-# define KEY_MOVE_JULIA 35
+# define KEY_MOVE_JULIA 119
 
 typedef	struct		s_mlx
 {
-	int				mouse;
+	struct s_img	*img;
 	void			*init;
 	void			*win;
-	struct s_img	*img;
+	int				mouse;
 	int				type;
+	int				iteration_max;
+	int			clring;
+	int				pass;
+	int				**tab;
+	int				incr;
 	float			x1;
 	float			x2;
 	float			y1;
@@ -45,14 +50,10 @@ typedef	struct		s_mlx
 	float			image_x;
 	float			image_y;
 	float			tmp;
-	int				iteration_max;
-	float		color;
-	int			clring;
-	int				pass;
 	float			zoom_x;
 	float			zoom_y;
-	int				**tab;
-	int				incr;
+	float			zoom;
+	float		color;
 }					t_mlx;
 
 typedef struct		s_coord
@@ -73,27 +74,27 @@ typedef struct		s_img
 
 int					ft_init_mlx(t_mlx **mlx);
 int					ft_init_mlx_2(t_mlx **mlx);
-void				ft_free_mlx(t_mlx **mlx);
-void				ft_put_pixel(t_mlx *mlx, int x, int y, int color);
 int					ft_init_t_mlx_2(t_mlx **mlx);
 int					fractol(t_mlx **mlx);
+int					color(t_mlx *mlx, int i);
+int					init(t_mlx **mlx, int x, int y);
+int					init_2(t_mlx **mlx, int x, int y);
+int					init_3(t_mlx **mlx, int x, int y);
+int					ft_init_coord(t_coord **coord);
+int					ft_add_coord(t_coord *tmp_pixel, int x, int y);
+int					ft_abs(int value);
+int					do_type(t_mlx *mlx, char *src);
+void				ft_free_mlx(t_mlx **mlx);
+void				ft_put_pixel(t_mlx *mlx, int x, int y, int color);
 void				ctrl(t_mlx **mlx);
 void				ft_put_pixel(t_mlx *mlx, int x, int y, int color);
 void				do_again(t_mlx **mlx);
 void				set_point(t_mlx **mlx);
 void				set_point_2(t_mlx **mlx);
 void				set_point_3(t_mlx **mlx);
-void				zoom(t_mlx *mlx);
-void				de_zoom(t_mlx *mlx);
-int					color(t_mlx *mlx, int i);
-int					init(t_mlx **mlx, int x, int y);
-int					init_2(t_mlx **mlx, int x, int y);
-int					init_3(t_mlx **mlx, int x, int y);
-int					ft_init_coord(t_coord **coord);
+void				zoom(int x, int y, t_mlx *mlx);
+void				de_zoom(int x, int y, t_mlx *mlx);
 void				ft_free_coord(t_coord **coord);
-int					ft_add_coord(t_coord *tmp_pixel, int x, int y);
-int					ft_abs(int value);
-int					do_type(t_mlx *mlx, char *src);
 void				change_color(t_mlx *mlx);
 
 #endif

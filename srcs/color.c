@@ -6,7 +6,7 @@
 /*   By: atyczyns <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 15:21:33 by atyczyns          #+#    #+#             */
-/*   Updated: 2019/06/19 13:27:01 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/20 12:48:29 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int		color(t_mlx *mlx, int i)
 		mlx->color = 0x0000FF * i * i * mlx->clring / mlx->iteration_max;
 	else if (mlx->type == 3 && mlx->pass == 0)
 		mlx->color = 0xFFFFFF * i * i * mlx->clring / mlx->iteration_max;
-	else if (mlx->type == 2)
-		mlx->color = 0xFFFFFF * i * i * mlx->clring / mlx->iteration_max;
 	return (mlx->color);
 }
 
@@ -33,5 +31,5 @@ void	change_color(t_mlx *mlx)
 		mlx->clring = 3;
 	else
 		mlx->clring = 1;
-	printf("mlx->clring = %i\n", mlx->clring);
+	mlx->pass = 1;
 }

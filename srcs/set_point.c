@@ -6,7 +6,7 @@
 /*   By: atyczyns <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 14:03:02 by atyczyns          #+#    #+#             */
-/*   Updated: 2019/06/19 13:23:11 by atyczyns         ###   ########.fr       */
+/*   Updated: 2019/06/20 12:48:54 by atyczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	set_point_2(t_mlx **mlx)
 	(*mlx)->image_y = 500;
 	(*mlx)->pass = 0;
 	(*mlx)->incr = 0;
+	(*mlx)->zoom = 200;
+	(*mlx)->c_r = 0.285;
+	(*mlx)->c_i = 0.01;
 }
 
 void	set_point_3(t_mlx **mlx)
